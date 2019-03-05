@@ -13,7 +13,7 @@ Steps:
 * Tweak the values at the beginning of the script, they're commented
 * Run the script when you want to submit. Please note that this is designed to use Python3,
   and it's standalone (no need for virtual environments, etc, it will setup its dependencies
-  automatically)
+  automatically in an isolated way, so it won't mess with your system deps)
 
 ## Notes
 

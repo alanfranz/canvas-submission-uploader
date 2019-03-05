@@ -15,3 +15,6 @@ Steps:
   and it's standalone (no need for virtual environments, etc, it will setup its dependencies
   automatically)
 
+## Notes
+
+This is an unofficial tool. I'm not affiliated with Instructure.

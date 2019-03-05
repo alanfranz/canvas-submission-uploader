@@ -6,7 +6,7 @@ import hashlib
 
 # start editing here
 
-# pick a canvas key in Account -> Settings -> Approved Integrations -> New Access Token.
+# pick an access token in Account -> Settings -> Approved Integrations -> New Access Token.
 # KEEP THE TOKEN PRIVATE (hence, don't commit this script in public repos)
 # if you accidentally leak the token, you must delete it from canvas!
 CANVAS_KEY = "mycanvaskey"

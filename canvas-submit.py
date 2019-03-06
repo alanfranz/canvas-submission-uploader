@@ -31,6 +31,27 @@ requests==2.21.0
 urllib3==1.24.1
 """
 
+# https://stackoverflow.com/a/44873382
+def sha256sum(filename):
+    h  = hashlib.sha256()
+    b  = bytearray(128*1024)
+    mv = memoryview(b)
+    with open(filename, 'rb', buffering=0) as f:
+        for n in iter(lambda : f.readinto(mv), 0):
+            h.update(mv[:n])
+    return h.hexdigest()
+
+#https://stackoverflow.com/a/16696317 with tweaks
+def download_file(url, f):
+    # NOTE the stream=True parameter below
+    with requests.get(url, stream=True) as r:
+        r.raise_for_status()
+        for chunk in r.iter_content(chunk_size=8192):
+            if chunk: # filter out keep-alive new chunks
+                f.write(chunk)
+    # possibly unneeded.
+    f.flush()
+
 
 def add_custom_site_packages_directory(raise_if_failure=True):
     digest = hashlib.sha256(REQUIREMENTS.encode("utf8")).hexdigest()
@@ -85,6 +106,7 @@ while True:
         add_custom_site_packages_directory()
         deps_installed = True
 
+hashes = {}
 file_ids = []
 for fn in FILENAMES:
     print(
@@ -109,6 +131,7 @@ for fn in FILENAMES:
     upload_url = response["upload_url"]
     upload_params = response["upload_params"]
 
+    hashes[fn] = sha256sum(fn)
     r2 = requests.post(
         upload_url, data=upload_params, files={"file": (fn, open(fn, "rb"))}
     )
@@ -130,5 +153,33 @@ r3 = requests.post(
 )
 
 r3.raise_for_status()
-print("\n")
-print("UPLOAD OK!")
+submission_response = r3.json()
+
+print("")
+print("Submission upload OK!")
+print("")
+print("Verifying...")
+r4 = requests.get(
+    CANVAS_API_BASE
+    + "courses/{COURSE_ID}/assignments/{ASSIGNMENT_ID}/submissions/{user_id}".format(
+        COURSE_ID=COURSE_ID, ASSIGNMENT_ID=ASSIGNMENT_ID, user_id = submission_response["user_id"]),
+        params = {"access_token": CANVAS_KEY}
+)
+r4.raise_for_status()
+
+submission_request_response = r4.json()
+attachments = submission_request_response["attachments"]
+
+for a in attachments:
+    fn = a["filename"]
+    url = a["url"]
+    with open("/tmp/" + fn, "wb") as tmp:
+        download_file(url, tmp)
+        digest = sha256sum(tmp.name)
+        if digest != hashes[fn]:
+            raise ValueError("Unmatching content for file {fn}".format(fn=fn))
+        print("{fn} verification succeeded, sha256 digest: {digest}".format(fn=fn, digest=digest))
+
+
+print("")
+print("Submission verification OK!")

@@ -9,7 +9,13 @@ import hashlib
 # pick an access token in Account -> Settings -> Approved Integrations -> New Access Token.
 # KEEP THE TOKEN PRIVATE (hence, don't commit this script in public repos)
 # if you accidentally leak the token, you must delete it from canvas!
-CANVAS_KEY = "mycanvaskey"
+# you can choose to set the token here, like this:
+# CANVAS_KEY = "mycanvaskey"
+# as an alternative, you could choose passing the key from the command line
+# in an environment variable called CANVAS_KEY when you launch the process; then, you don't need
+# changing the following line.
+CANVAS_KEY = "" or os.environ["CANVAS_KEY"]
+
 # Base API URL for Georgia Tech Canvas. Tweak this for other institutes.
 CANVAS_API_BASE = "https://gatech.instructure.com/api/v1/"
 # from your course url - e.g. https://gatech.instructure.com/courses/35002 - pick the final number

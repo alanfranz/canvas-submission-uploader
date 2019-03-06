@@ -32,4 +32,4 @@ This is an unofficial tool. I'm not affiliated with Instructure.
 ## Disclaimer
 
 While I put a bit of effort into this, and I use it myself, bugs can happen. APIs can change.
-I'm not responsibile if your assignment doesn't get submitted and you get a bad grade.
+I'm not responsible if your assignment doesn't get submitted and you get a bad grade.

@@ -33,21 +33,22 @@ urllib3==1.24.1
 
 # https://stackoverflow.com/a/44873382
 def sha256sum(filename):
-    h  = hashlib.sha256()
-    b  = bytearray(128*1024)
+    h = hashlib.sha256()
+    b = bytearray(128 * 1024)
     mv = memoryview(b)
-    with open(filename, 'rb', buffering=0) as f:
-        for n in iter(lambda : f.readinto(mv), 0):
+    with open(filename, "rb", buffering=0) as f:
+        for n in iter(lambda: f.readinto(mv), 0):
             h.update(mv[:n])
     return h.hexdigest()
 
-#https://stackoverflow.com/a/16696317 with tweaks
+
+# https://stackoverflow.com/a/16696317 with tweaks
 def download_file(url, f):
     # NOTE the stream=True parameter below
     with requests.get(url, stream=True) as r:
         r.raise_for_status()
         for chunk in r.iter_content(chunk_size=8192):
-            if chunk: # filter out keep-alive new chunks
+            if chunk:  # filter out keep-alive new chunks
                 f.write(chunk)
     # possibly unneeded.
     f.flush()
@@ -78,6 +79,7 @@ while True:
     try:
         import requests
         import magic
+
         break
     except ImportError:
         if deps_installed:
@@ -162,8 +164,11 @@ print("Verifying...")
 r4 = requests.get(
     CANVAS_API_BASE
     + "courses/{COURSE_ID}/assignments/{ASSIGNMENT_ID}/submissions/{user_id}".format(
-        COURSE_ID=COURSE_ID, ASSIGNMENT_ID=ASSIGNMENT_ID, user_id = submission_response["user_id"]),
-        params = {"access_token": CANVAS_KEY}
+        COURSE_ID=COURSE_ID,
+        ASSIGNMENT_ID=ASSIGNMENT_ID,
+        user_id=submission_response["user_id"],
+    ),
+    params={"access_token": CANVAS_KEY},
 )
 r4.raise_for_status()
 
@@ -178,7 +183,11 @@ for a in attachments:
         digest = sha256sum(tmp.name)
         if digest != hashes[fn]:
             raise ValueError("Unmatching content for file {fn}".format(fn=fn))
-        print("{fn} verification succeeded, sha256 digest: {digest}".format(fn=fn, digest=digest))
+        print(
+            "{fn} verification succeeded, sha256 digest: {digest}".format(
+                fn=fn, digest=digest
+            )
+        )
 
 
 print("")

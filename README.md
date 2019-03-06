@@ -5,6 +5,8 @@ A very simple submission script for [Instructure Canvas](https://www.canvaslms.c
 I find it useful for multi-file submissions, where I always risk forgetting a piece of code that
 I need to submit. As an [OMSCS](https://www.omscs.gatech.edu/) student, I find this VERY useful.
 
+The code performs a verification by downloading files and checking their digests after submitting.
+
 ## Instructions
 
 Steps:
@@ -15,6 +17,16 @@ Steps:
   and it's standalone (no need for virtual environments, etc, it will setup its dependencies
   automatically in an isolated way, so it won't mess with your system deps)
 
+## Caveats
+
+It seems that Canvas doesn't work properly with empty files. Don't use empty files as placeholders
+when you don't have data yet, or verification will fail.
+
 ## Notes
 
 This is an unofficial tool. I'm not affiliated with Instructure.
+
+## Disclaimer
+
+While I put a bit of effort into this, and I use it myself, bugs can happen. APIs can change.
+I'm not responsibile if your assignment doesn't get submitted and you get a bad grade.

@@ -10,9 +10,12 @@ The code performs a verification by downloading files and checking their digests
 ## Instructions
 
 Steps:
-* Pick an access token for canvas (Account -> Settings -> Approved integrations -> New Access Token)
+* Create an access token for canvas (Account -> Settings -> Approved integrations -> New Access Token).
+  Please remember that such token must be kept private. Don't commit it to public repositories, and if 
+  you leak it, you'll need to revoke it.
 * Just copy this template in each directory where you hold the files for an assignment
-* Tweak the values at the beginning of the script, they're commented
+* Tweak the values at the beginning of the script, they're commented. You may choose to pass
+  your access token in a CANVAS\_KEY environment variable instead of hardcoding.
 * Run the script when you want to submit. Please note that this is designed to use Python3,
   and it's standalone (no need for virtual environments, etc, it will setup its dependencies
   automatically in an isolated way, so it won't mess with your system deps)

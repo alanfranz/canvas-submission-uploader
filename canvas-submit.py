@@ -184,7 +184,7 @@ attachments = submission_request_response["attachments"]
 for a in attachments:
     fn = a["filename"]
     url = a["url"]
-    with open("/tmp/" + fn, "wb") as tmp:
+    with NamedTemporaryFile("wb") as tmp:
         download_file(url, tmp)
         digest = sha256sum(tmp.name)
         if digest != hashes[fn]:

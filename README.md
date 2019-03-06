@@ -22,8 +22,9 @@ Steps:
 
 ## Caveats
 
-It seems that Canvas doesn't work properly with empty files. Don't use empty files as placeholders
+* It seems that Canvas doesn't work properly with empty files. Don't use empty files as placeholders
 when you don't have data yet, or verification will fail.
+* This is untested on Windows. I use it on Linux and Mac.
 
 ## Notes
 

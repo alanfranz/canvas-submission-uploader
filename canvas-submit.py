@@ -122,7 +122,7 @@ for fn in FILENAMES:
             fn=fn, ASSIGNMENT_ID=ASSIGNMENT_ID
         )
     )
-    r = requests.post(
+    with requests.post(
         CANVAS_API_BASE
         + "courses/{COURSE_ID}/assignments/{ASSIGNMENT_ID}/submissions/self/files".format(
             COURSE_ID=COURSE_ID, ASSIGNMENT_ID=ASSIGNMENT_ID
@@ -133,23 +133,23 @@ for fn in FILENAMES:
             "size": os.stat(fn).st_size,
             "content_type": magic.from_file(fn, mime=True),
         },
-    )
-    r.raise_for_status()
-    response = r.json()
+    ) as r:
+        r.raise_for_status()
+        response = r.json()
     upload_url = response["upload_url"]
     upload_params = response["upload_params"]
 
     hashes[fn] = sha256sum(fn)
-    r2 = requests.post(
+    with requests.post(
         upload_url, data=upload_params, files={"file": (fn, open(fn, "rb"))}
-    )
-    r2.raise_for_status()
+    ) as r2:
+        r2.raise_for_status()
+        upload_response = r2.json()
 
-    upload_response = r2.json()
     file_ids.append(upload_response["id"])
 
 print("Submitting...")
-r3 = requests.post(
+with requests.post(
     CANVAS_API_BASE
     + "courses/{COURSE_ID}/assignments/{ASSIGNMENT_ID}/submissions".format(
         COURSE_ID=COURSE_ID, ASSIGNMENT_ID=ASSIGNMENT_ID
@@ -158,16 +158,16 @@ r3 = requests.post(
         "submission": {"submission_type": "online_upload", "file_ids": file_ids},
         "access_token": CANVAS_KEY,
     },
-)
+) as r3:
 
-r3.raise_for_status()
-submission_response = r3.json()
+    r3.raise_for_status()
+    submission_response = r3.json()
 
 print("")
 print("Submission upload OK!")
 print("")
 print("Verifying...")
-r4 = requests.get(
+with requests.get(
     CANVAS_API_BASE
     + "courses/{COURSE_ID}/assignments/{ASSIGNMENT_ID}/submissions/{user_id}".format(
         COURSE_ID=COURSE_ID,
@@ -175,10 +175,11 @@ r4 = requests.get(
         user_id=submission_response["user_id"],
     ),
     params={"access_token": CANVAS_KEY},
-)
-r4.raise_for_status()
+) as r4:
+    r4.raise_for_status()
 
-submission_request_response = r4.json()
+    submission_request_response = r4.json()
+
 attachments = submission_request_response["attachments"]
 
 for a in attachments:

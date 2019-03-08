@@ -188,13 +188,18 @@ for a in attachments:
     with NamedTemporaryFile("wb") as tmp:
         download_file(url, tmp)
         digest = sha256sum(tmp.name)
-        if digest != hashes[fn]:
+        h = hashes.pop(fn)
+        if digest != h:
             raise ValueError("Unmatching content for file {fn}".format(fn=fn))
         print(
             "{fn} verification succeeded, sha256 digest: {digest}".format(
                 fn=fn, digest=digest
             )
         )
+
+if hashes:
+    print("It seems that some files were not downloaded as part of the submission: " + ",".join(list(h.keys())))
+    raise ValueError("Submission verification failed")
 
 
 print("")

@@ -7,6 +7,14 @@ I need to submit. As an [OMSCS](https://www.omscs.gatech.edu/) student, I find t
 
 The code performs a verification by downloading files and checking their digests after submitting.
 
+## Disclaimer
+
+While I put a bit of effort into this, and I use it myself, bugs can happen. APIs can change.
+I'm not responsible if your assignment doesn't get submitted and you get a bad grade. **Before the deadline, always check in the web interface if your assignment was submitted, and if the timestamp of the submission matches what do you expect.**
+
+Please note that this is an unofficial tool. I'm unaffiliated with Instructure, Georgia Tech, or any other institution using Canvas. Every user should be responsible for using this; if you don't understand or trust it, check the [Official Canvas API](https://canvas.instructure.com/doc/api/) and only start using this if you believe it works properly.
+
+
 ## Instructions
 
 Steps:
@@ -18,19 +26,10 @@ Steps:
   your access token in a CANVAS\_KEY environment variable instead of hardcoding.
 * Run the script when you want to submit. Please note that this is designed to use Python3,
   and it's standalone (no need for virtual environments, etc, it will setup its dependencies
-  automatically in an isolated way, so it won't mess with your system deps)
+  automatically in an isolated way, so it won't mess with your system deps). Just set the proper shebang if needed.
 
 ## Caveats
 
 * It seems that Canvas doesn't work properly with empty files. Don't use empty files as placeholders
 when you don't have data yet, or verification will fail.
 * This is untested on Windows. I use it on Linux and Mac.
-
-## Notes
-
-This is an unofficial tool. I'm not affiliated with Instructure.
-
-## Disclaimer
-
-While I put a bit of effort into this, and I use it myself, bugs can happen. APIs can change.
-I'm not responsible if your assignment doesn't get submitted and you get a bad grade.

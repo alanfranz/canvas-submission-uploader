@@ -198,7 +198,7 @@ for a in attachments:
         )
 
 if hashes:
-    print("It seems that some files were not downloaded as part of the submission: " + ",".join(list(h.keys())))
+    print("It seems that some files were not downloaded as part of the submission: " + ",".join(list(hashes.keys())))
     raise ValueError("Submission verification failed")
 
 

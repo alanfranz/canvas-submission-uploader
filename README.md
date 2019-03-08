@@ -10,10 +10,9 @@ The code performs a verification by downloading files and checking their digests
 ## Disclaimer
 
 While I put a bit of effort into this, and I use it myself, bugs can happen. APIs can change.
-I'm not responsible if your assignment doesn't get submitted and you get a bad grade. **Before the deadline, always check in the web interface if your assignment was submitted, and if the timestamp of the submission matches what you expect.**
+I'm not responsible if your assignment doesn't get submitted and you get a bad grade. And your instructors aren't either, unless they explicitly endorse this tool. **Before the deadline, always check in the web interface if your assignment was submitted, and if the timestamp of the submission matches what you expect.**
 
 Please note that this is an unofficial tool. I'm unaffiliated with Instructure, Georgia Tech, or any other institution using Canvas. Every user should be responsible for using this; if you don't understand or trust it, check the [Official Canvas API](https://canvas.instructure.com/doc/api/) and only start using this if you believe it works properly.
-
 
 ## Instructions
 
